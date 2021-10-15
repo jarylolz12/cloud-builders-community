@@ -1,22 +1,157 @@
 steps:
 - name: gcr.io/$PROJECT_ID/remote-builder
+  id: "1"
   waitFor: ["-"]
   env:
-    # Use Container Optimized OS
-    # https://cloud.google.com/container-optimized-os/docs/
-    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
-    - ZONE=us-central1-f
-    - USERNAME=cloud-user
-    # Run a script from the local build context in a Docker container
-    - COMMAND=docker run -v /home/cloud-user/workspace:/workspace ubuntu:16.04 bash -xe /workspace/test-scripts/no-op.sh
-- name: gcr.io/$PROJECT_ID/remote-builder
-  waitFor: ["-"]
-  env:
-    # Use Container Optimized OS
-    # https://cloud.google.com/container-optimized-os/docs/
-    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
-    - ZONE=us-central1-f
-    - USERNAME=cloud-user
-    # Run a script from the local build context in a Docker container
-    - COMMAND=docker run -v /home/cloud-user/workspace:/workspace ubuntu:16.04 bash -xe /workspace/test-scripts/no-op.sh
-tags: ['cloud-builders-community']
+    - ZONE=asia-southeast1-a
+    - USERNAME=remote-builder
+    - BUILD_ID=$BUILD_ID
+    - INSTANCE_NAME=default-vm
+    # Run a script from the local build context inside workspace
+    - COMMAND=bash ./$BUILD_ID/test-scripts/no-op.sh
+# tags: ['cloud-builders-community']
+
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "2"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "3"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "4"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "5"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "6"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "7"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "8"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "9"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "10"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "11"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "12"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
+# - name: gcr.io/$PROJECT_ID/remote-builder
+#   id: "13"
+#   waitFor: ["-"]
+#   env:
+#     # Use Container Optimized OS
+#     # https://cloud.google.com/container-optimized-os/docs/
+#     - INSTANCE_ARGS=--service-account arvo-project-vm@arvo-project.iam.gserviceaccount.com --network=$PROJECT_ID-remotebuilder-network --subnet=$PROJECT_ID-remotebuilder-subnetwork --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --scopes https://www.googleapis.com/auth/cloud-platform
+#     - ZONE=asia-southeast1-a
+#     - USERNAME=cloud-user
+#     - FIXED_INSTANCE=YES
+#     # Run a script from the local build context in a Docker container
+#     - COMMAND=bash ./workspace/test-scripts/no-op.sh
