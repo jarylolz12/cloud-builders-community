@@ -7,15 +7,8 @@ USERNAME=${USERNAME:-admin}
 REMOTE_WORKSPACE=${REMOTE_WORKSPACE:-/mnt/disks/data/${USERNAME}/$BUILD_ID}
 INSTANCE_NAME=${INSTANCE_NAME:-builder-$(cat /proc/sys/kernel/random/uuid)}
 ZONE=${ZONE:-us-central1-f}
-# INSTANCE_ARGS=${INSTANCE_ARGS:---preemptible}
-# SSH_ARGS=${SSH_ARGS:-}
 GCLOUD=${GCLOUD:-gcloud}
 RETRIES=${RETRIES:-10}
-
-# Always delete instance after attempting build
-# function cleanup {
-#     ${GCLOUD} compute instances delete ${INSTANCE_NAME} --quiet
-# }
 
 # Run command on the instance via ssh
 function ssh {
@@ -34,13 +27,6 @@ cat > ssh-keys <<EOF
 ${USERNAME}:$(cat ${KEYNAME}.pub)
 EOF
 
-# ${GCLOUD} compute instances create \
-#        ${INSTANCE_ARGS} ${INSTANCE_NAME} \
-#        --metadata block-project-ssh-keys=TRUE \
-#        --metadata-from-file ssh-keys=ssh-keys
-
-# trap cleanup EXIT
-
 RETRY_COUNT=1
 while [ "$(ssh 'printf pass')" != "pass" ]; do
   echo "[Try $RETRY_COUNT of $RETRIES] Waiting for instance to start accepting SSH connections..."
@@ -57,7 +43,3 @@ ${GCLOUD} compute scp ${SSH_ARGS} --compress --recurse \
        --ssh-key-file=${KEYNAME}
 
 ssh "${COMMAND}"
-
-# ${GCLOUD} compute scp ${SSH_ARGS} --compress --recurse \
-#        ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE}* $(pwd) \
-#        --ssh-key-file=${KEYNAME}
