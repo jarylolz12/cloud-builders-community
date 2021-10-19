@@ -4,7 +4,7 @@
 [ -z "$COMMAND" ] && echo "Need to set COMMAND" && exit 1;
 
 USERNAME=${USERNAME:-admin}
-REMOTE_WORKSPACE=${REMOTE_WORKSPACE:-/mnt/disks/data/${USERNAME}/$BUILD_ID}
+REMOTE_WORKSPACE=${REMOTE_WORKSPACE:-/home/${USERNAME}/workspace/}
 INSTANCE_NAME=${INSTANCE_NAME:-builder-$(cat /proc/sys/kernel/random/uuid)}
 ZONE=${ZONE:-us-central1-f}
 GCLOUD=${GCLOUD:-gcloud}
